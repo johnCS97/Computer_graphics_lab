@@ -15,3 +15,5 @@ Reading about <i>The game of life</i> algorithm.
 Planing workflow and time management.
 
 Time total: 3 hours.
+
+Written the code of game of life on python.
