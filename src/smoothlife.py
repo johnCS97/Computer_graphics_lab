@@ -1,4 +1,8 @@
 import math
+import pygame
+
+import Rules as R
+import Multipliers as M
 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -10,101 +14,13 @@ from matplotlib import animation
 # from matplotlib import cm
 
 
-class Rules:
-    # Birth range
-    B1 = 0.278
-    B2 = 0.365
-    # Survival range
-    D1 = 0.267
-    D2 = 0.445
-    # Sigmoid widths
-    N = 0.028
-    M = 0.147
-
-    # B1 = 0.257
-    # B2 = 0.336
-    # D1 = 0.365
-    # D2 = 0.549
-    # N = 0.028
-    # M = 0.147
-
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)  # Set variables from constructor
-
-    @staticmethod
-    def sigma(x, a, alpha):
-        """Logistic function on x Transition around a with steepness alpha"""
-        return 1.0 / (1.0 + np.exp(-4.0 / alpha * (x - a)))
-
-    def sigma2(self, x, a, b):
-        """Logistic function on x between a and b"""
-        return self.sigma(x, a, self.N) * (1.0 - self.sigma(x, b, self.N))
-
-    @staticmethod
-    def lerp(a, b, t):
-        """Linear intererpolate t:[0,1] from a to b"""
-        return (1.0 - t) * a + t * b
-
-    def s(self, n, m):
-        """State transition function"""
-        alive = self.sigma(m, 0.5, self.M)
-        return self.sigma2(n, self.lerp(self.B1, self.D1, alive), self.lerp(self.B2, self.D2, alive))
-
-
-def logistic2d(size, radius, roll=True, logres=None):
-    """Create a circle with blurred edges
-    Set roll=False to have the circle centered in the middle of the
-    matrix. Default is to center at the extremes (best for convolution).
-    The transition width of the blur scales with the size of the grid.
-    I'm not actually sure of the math behind it, but it's what was presented
-    in the code from:
-    https://0fps.net/2012/11/19/conways-game-of-life-for-curved-surfaces-part-1/
-    """
-    y, x = size
-    # Get coordinate values of each point
-    yy, xx = np.mgrid[:y, :x]
-    # Distance between each point and the center
-    radiuses = np.sqrt((xx - x/2)**2 + (yy - y/2)**2)
-    # Scale factor for the transition width
-    if logres is None:
-        logres = math.log(min(*size), 2)
-    with np.errstate(over="ignore"):
-        # With big radiuses, the exp overflows,
-        # but 1 / (1 + inf) == 0, so it's fine
-        logistic = 1 / (1 + np.exp(logres * (radiuses - radius)))
-    if roll:
-        logistic = np.roll(logistic, y//2, axis=0)
-        logistic = np.roll(logistic, x//2, axis=1)
-    return logistic
-
-
-class Multipliers:
-    """Kernel convulution for neighbor integral"""
-
-    INNER_RADIUS = 7.0
-    OUTER_RADIUS = INNER_RADIUS * 3.0
-
-    def __init__(self, size, inner_radius=INNER_RADIUS, outer_radius=OUTER_RADIUS):
-        inner = logistic2d(size, inner_radius)
-        outer = logistic2d(size, outer_radius)
-        annulus = outer - inner
-
-        # Scale each kernel so the sum is 1
-        inner /= np.sum(inner)
-        annulus /= np.sum(annulus)
-
-        # Precompute the FFT's
-        self.M = np.fft.fft2(inner)
-        self.N = np.fft.fft2(annulus)
-
-
 class SmoothLife:
     def __init__(self, height, width):
         self.width = width
         self.height = height
 
-        self.multipliers = Multipliers((height, width))
-        self.rules = Rules()
+        self.multipliers = M.Multipliers((height, width))
+        self.rules = R.Rules()
         
         self.clear()
         # self.esses = [None] * 3
@@ -197,38 +113,38 @@ class SmoothLife:
 
 
 
-def show_animation():
-    w = 1 << 9
-    h = 1 << 9
-    # w = 1920
-    # h = 1080
-    sl = SmoothLife(h, w)
-    sl.add_speckles()
-    sl.step()
+    def show_animation():
+        w = 1 << 9
+        h = 1 << 9
+        # w = 1920
+        # h = 1080
+        sl = SmoothLife(h, w)
+        sl.add_speckles()
+        sl.step()
 
-    fig = plt.figure()
-    # Nice color maps: viridis, plasma, gray, binary, seismic, gnuplot
-    im = plt.imshow(sl.field, animated=True,
+        fig = plt.figure()
+        # Nice color maps: viridis, plasma, gray, binary, seismic, gnuplot
+        im = plt.imshow(sl.field, animated=True,
                     cmap=plt.get_cmap("viridis"), aspect="equal")
 
-    def animate(*args):
-        im.set_array(sl.step())
-        return (im, )
+        def animate(*args):
+            im.set_array(sl.step())
+            return (im, )
 
-    ani = animation.FuncAnimation(fig, animate, interval=60, blit=True)
-    plt.show()
+        ani = animation.FuncAnimation(fig, animate, interval=60, blit=True)
+        plt.show()
 
 
-def save_animation():
-    w = 1 << 8
-    h = 1 << 8
-    # w = 1920
-    # h = 1080
-    sl = SmoothLife(h, w)
-    sl.add_speckles()
+    def save_animation():
+        w = 1 << 8
+        h = 1 << 8
+        # w = 1920
+        # h = 1080
+        sl = SmoothLife(h, w)
+        sl.add_speckles()
 
-    # Matplotlib shoves a horrible border on animation saves.
-    # We'll do it manually. Ugh
+        # Matplotlib shoves a horrible border on animation saves.
+        # We'll do it manually. Ugh
 
     from skvideo.io import FFmpegWriter
     from matplotlib import cm
