@@ -9,8 +9,8 @@ width, height = 1280, 720
 pygame.init()
 size = (width, height)
 screen = pygame.display.set_mode(size)
-icon = pygame.image.load("/Users/johnpierresmac/Desktop/Computer_graphics_lab/icons/gol_icon.png")
-pygame.display.set_icon(icon)
+# icon = pygame.image.load("\Users\lilia\OneDrive\שולחן העבודה\Computer_graphics_lab\icons\gol_icon.png")
+# pygame.display.set_icon(icon)
 pygame.display.set_caption("Conway's life")
 
 clock = pygame.time.Clock()
@@ -34,3 +34,4 @@ while run:
             run = False
     conway.conway_life(screen, off_color, on_color)
     pygame.display.update()
+

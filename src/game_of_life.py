@@ -65,3 +65,4 @@ class Game:
             total += self.game_array[x + 1][y]
 
         return total
+
