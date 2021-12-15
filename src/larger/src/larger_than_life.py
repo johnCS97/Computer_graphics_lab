@@ -5,20 +5,21 @@ import pygame
 
 
 class Game:
-    def _init_(self, scale, width, height, offset,r):
+    def __init__(self, scale, width, height, offset,r):
         self.scale = scale
         self.rows = int(width / scale) + 20
         self.columns = int(height / scale) + 20
         self.offset = offset
-        self.game_array = np.ndarray(shape=(self.rows, self.columns))
         self.r = r
+        self.game_array = np.ndarray(shape=(self.rows, self.columns))
+        
     def array_init(self):
         for x in range(self.rows):
             for y in range(self.columns):
                 self.game_array[x][y] = random.randint(0, 1)
 
     def next_gen(self):
-        next_gen = np.ndarray(shape=(self.rows, self.columns, self.r))
+        next_gen = np.ndarray(shape=(self.rows, self.columns))
         for x in range(self.rows):
             for y in range(self.columns):
                 number_of_neighbours = self.get_neighbours(x, y)
@@ -52,15 +53,15 @@ class Game:
         l=y+self.r
         if n < 0:
             n=0
-        if m > self.columns:
-            m=self.columns
+        if m > self.rows:
+            m=self.rows
         if k < 0:
             k=0
-        if l > self.rows:
-            l=self.rows
+        if l > self.columns:
+            l=self.columns
         for i in range (n, m) :
             for j in range (k, l):
-                if(i==self.r and j==self.r):
+                if(i==x and j==y):
                     continue
                 total+= self.game_array[i][j]
         return total
