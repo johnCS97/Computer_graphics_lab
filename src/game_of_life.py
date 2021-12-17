@@ -7,14 +7,14 @@ import pygame
 class Game:
     def __init__(self, scale, width, height, offset):
         self.scale = scale
-        self.rows = int(width / scale) + 20
-        self.columns = int(height / scale) + 20
+        self.rows = int(width / scale)
+        self.columns = int(height / scale)
         self.offset = offset
         self.game_array = np.ndarray(shape=(self.rows, self.columns))
 
     def array_init(self):
-        for x in range(self.rows):
-            for y in range(self.columns):
+        for x in range(int(self.rows/8), int(3*self.rows/8) ):
+            for y in range(int(self.columns/8), int(3*self.columns/8)):
                 self.game_array[x][y] = random.randint(0, 1)
 
     def next_gen(self):

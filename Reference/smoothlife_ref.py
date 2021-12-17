@@ -1,8 +1,8 @@
 import math
 import pygame
 
-import Rules as R
-import Multipliers as M
+import Rules_ref as R
+import Multipliers_ref as M
 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -18,10 +18,8 @@ class SmoothLife:
     def __init__(self, height, width):
         self.width = width
         self.height = height
-
         self.multipliers = M.Multipliers((height, width))
         self.rules = R.Rules()
-        
         self.clear()
         # self.esses = [None] * 3
         # self.esses_count = 0
@@ -113,7 +111,7 @@ class SmoothLife:
 
 
 
-    def show_animation():
+def show_animation():
         w = 1 << 9
         h = 1 << 9
         # w = 1920
@@ -129,41 +127,10 @@ class SmoothLife:
 
         def animate(*args):
             im.set_array(sl.step())
-            return (im, )
+            return (im)
 
         ani = animation.FuncAnimation(fig, animate, interval=60, blit=True)
         plt.show()
-
-
-    def save_animation():
-        w = 1 << 8
-        h = 1 << 8
-        # w = 1920
-        # h = 1080
-        sl = SmoothLife(h, w)
-        sl.add_speckles()
-
-        # Matplotlib shoves a horrible border on animation saves.
-        # We'll do it manually. Ugh
-
-    from skvideo.io import FFmpegWriter
-    from matplotlib import cm
-
-    fps = 10
-    frames = 100
-    w = FFmpegWriter("smoothlife.mp4", inputdict={"-r": str(fps)})
-    for i in range(frames):
-        frame = cm.viridis(sl.field)
-        frame *= 255
-        frame = frame.astype("uint8")
-        w.writeFrame(frame)
-        sl.step()
-    w.close()
-
-    # Also, webm output isn't working for me,
-    # so I have to manually convert. Ugh
-    # ffmpeg -i smoothlife.mp4 -c:v libvpx -b:v 2M smoothlife.webm
-
 
 if __name__ == '__main__':
     show_animation()

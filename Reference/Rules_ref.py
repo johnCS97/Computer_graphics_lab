@@ -45,16 +45,8 @@ class Rules:
         alive = self.sigma(m, 0.5, self.M)
         return self.sigma2(n, self.lerp(self.B1, self.D1, alive), self.lerp(self.B2, self.D2, alive))
 
+    def logistic2d (size, radius, roll=True, logres=None) :
 
-    def logistic2d(size, radius, roll=True, logres=None):
-        """Create a circle with blurred edges
-        Set roll=False to have the circle centered in the middle of the
-        matrix. Default is to center at the extremes (best for convolution).
-        The transition width of the blur scales with the size of the grid.
-        I'm not actually sure of the math behind it, but it's what was presented
-        in the code from:
-        https://0fps.net/2012/11/19/conways-game-of-life-for-curved-surfaces-part-1/
-        """
         y, x = size
         # Get coordinate values of each point
         yy, xx = np.mgrid[:y, :x]
