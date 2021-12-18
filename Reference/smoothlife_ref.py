@@ -35,7 +35,7 @@ class SmoothLife:
         # To sum up neighbors, do kernel convolutions
         # by multiplying in the frequency domain
         # and converting back to spacial domain
-        field_ = np.fft.fft2(self.field)
+      #  field_ = np.fft.fft2(self.field)
         M_buffer_ = field_ * self.multipliers.M
         N_buffer_ = field_ * self.multipliers.N
         M_buffer = np.real(np.fft.ifft2(M_buffer_))
@@ -130,7 +130,7 @@ def show_animation():
             return (im)
 
         ani = animation.FuncAnimation(fig, animate, interval=60, blit=True)
-        plt.show()
+        plt.show(ani)
 
 if __name__ == '__main__':
     show_animation()
