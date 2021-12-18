@@ -4,7 +4,7 @@ import math
 
 class Rules:
 
-    def __init__(self, b1=0.278, b2=0.365, d1=0.267, d2=0.445, m=0.028, n=0.147):
+    def __init__(self, b1=0.278, b2=0.365, d1=0.267, d2=0.445, m=0.028, n=0.147,):
         self.b1 = b1
         self.b2 = b2
         self.d1 = d1
@@ -12,20 +12,17 @@ class Rules:
         self.n = m
         self.m = n
 
-    @staticmethod
-    def sigmaoid_1(x, a, alpha):
-        return 1.0 / (1.0 + np.exp(-4.0 * (x - a) / alpha))
+    def sigmaoid_1(self, x, a):
+        return 1.0 / (1.0 + np.exp(-4.0 * (x - a) / self.n))
 
     def sigmaoid_2(self, x, a, b):
-        return self.sigmaoid_1(x, a, self.n) * (1.0 - self.sigmaoid_1(x, b, self.n))
+        return self.sigmaoid_1(x, a) * (1.0 - self.sigmaoid_1(x, b))
 
-    @staticmethod
-    def sigmaoid_m(x, y, m):
-        return x*(1.0-m)+y*m
+    def sigmaoid_m(self, x, y, m):
+        return x * (1.0-self.sigmaoid_1(m, 0.5)) + y * self.sigmaoid_1(m, 0.5)
 
     def sigmaoid_s(self, n, m):
         return self.sigmaoid_2(n, self.sigmaoid_m(self.b1, self.d1, m), self.sigmaoid_m(self.b2, self.d2, m))
-
 
 def logistics(size, radius,roll=True, logres=None):
     y, x = size
