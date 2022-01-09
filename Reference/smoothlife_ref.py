@@ -76,11 +76,14 @@ def logistic2d(size, radius, roll=True, logres=None):
     in the code from:
     https://0fps.net/2012/11/19/conways-game-of-life-for-curved-surfaces-part-1/
     """
+
     y, x = size
     # Get coordinate values of each point
     yy, xx = np.mgrid[:y, :x]
+
     # Distance between each point and the center
     radiuses = np.sqrt((xx - x/2)**2 + (yy - y/2)**2)
+
     # Scale factor for the transition width
     if logres is None:
         logres = math.log(min(*size), 2)
@@ -173,8 +176,8 @@ class SmoothLife:
 
 
 def show_animation():
-    w = 1 << 9
-    h = 1 << 9
+    w = 1 << 3
+    h = 1 << 3
     # w = 1920
     # h = 1080
     sl = SmoothLife(h, w)
@@ -183,7 +186,7 @@ def show_animation():
     fig = plt.figure()
     # Nice color maps: viridis, plasma, gray, binary, seismic, gnuplot
     im = plt.imshow(sl.field, animated=True,
-                    cmap=plt.get_cmap("viridis"), aspect="equal")
+                    cmap=plt.get_cmap("plasma"), aspect="equal")
 
     def animate(*args):
         im.set_array(sl.step())

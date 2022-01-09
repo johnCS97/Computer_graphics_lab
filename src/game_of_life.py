@@ -13,8 +13,8 @@ class Game:
         self.game_array = np.ndarray(shape=(self.rows, self.columns))
 
     def array_init(self):
-        for x in range(int(self.rows/8), int(3*self.rows/8) ):
-            for y in range(int(self.columns/8), int(3*self.columns/8)):
+        for x in range(self.rows ):
+            for y in range(self.columns):
                 self.game_array[x][y] = random.randint(0, 1)
 
     def next_gen(self):
