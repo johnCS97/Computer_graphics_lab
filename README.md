@@ -53,3 +53,37 @@ Total time: 9 hours
 
 ##Week 5 19/12/2021
 
+Started version1 a slower with simple implementation.
+
+Things not wotking well with animations.
+
+Total time: 6 hours
+
+##Week 6 26/12/2021
+
+Animations working
+
+Debugging smooth life version1.
+
+Smooth life version1 now works.
+
+Started working on smooth life version2.
+
+version2 goal is to be faster
+
+Total time : 9 hours
+
+##Week 7 2/1/2022
+
+Researched multiple ways to make kernel convulotion faster.
+
+FFT2 from numpy is the easiest and fast enough.
+
+Found the way to calculate the kernel.
+
+Smooth life now works.
+
+results seem good.
+
+Total time : 12 hours
+
