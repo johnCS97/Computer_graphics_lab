@@ -39,7 +39,7 @@ class SmoothL:
         return self.game_field
         
 if __name__ == '__main__':
-    sl = SmoothL(600, 600)
+    sl = SmoothL(700, 700)
     sl.create_cells(250,1)
     fig = plt.figure()
     im = plt.imshow(sl.game_field, animated=True,

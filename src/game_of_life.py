@@ -36,11 +36,11 @@ class Game:
             for y in range(self.columns):
                 if self.game_array[x][y] == 1:
                     pygame.draw.rect(surface, on_color,
-                                     [x * self.scale - 10 * self.scale, y * self.scale - 10 * self.scale,
+                                     [x * self.scale , y * self.scale ,
                                       self.scale - self.offset, self.scale - self.offset])
                 else:
                     pygame.draw.rect(surface, off_color,
-                                     [x * self.scale - 10 * self.scale, y * self.scale - 10 * self.scale,
+                                     [x * self.scale , y * self.scale ,
                                       self.scale - self.offset, self.scale - self.offset])
         self.next_gen()
 
