@@ -6,7 +6,7 @@ import Pivato as Pv
 from matplotlib import pyplot as plt
 from matplotlib import animation
 
-width, height = 200, 200
+width, height = 100, 100
 r = 5
 game = Pv.Game (width, height, r)
 

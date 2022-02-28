@@ -19,7 +19,16 @@ class Game:
 
     def next_gen(self):
         next_gen=ss.convolve2d(self.game_array,self.kernel, mode='same', boundary='wrap')
-        self.game_array=np.clip((self.game_array.all() and (next_gen==2)) or (next_gen==3),0,1)
+        for x in range(self.rows):
+            for y in range(self.columns):
+                number_of_neighbours = next_gen[x][y]
+                if self.game_array[x][y] == 1 and (number_of_neighbours == 2 or number_of_neighbours == 3):
+                    self.game_array[x][y] = 1
+                elif self.game_array[x][y] == 0 and number_of_neighbours == 3:
+                    self.game_array[x][y] = 1
+                else:
+                    self.game_array[x][y] = 0
+        self.game_array=np.clip(self.game_array,0,1)
         return self.game_array
         
 

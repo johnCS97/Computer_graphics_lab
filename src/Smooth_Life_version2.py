@@ -34,20 +34,20 @@ class SmoothL:
         M_buffer = np.real(np.fft.ifft2(M_buffer))
         N_buffer = np.real(np.fft.ifft2(N_buffer))
         s = self.rules.sigmaoid_s(N_buffer, M_buffer)
-        nextfield = s
-        self.game_field = np.clip(nextfield, 0, 1)
+        
+        self.game_field = np.clip(s, 0, 1)
         return self.game_field
         
 if __name__ == '__main__':
-    sl = SmoothL(700, 700)
-    sl.create_cells(250,1)
+    sl = SmoothL(400, 400)
+    sl.create_cells(100,1)
     fig = plt.figure()
     im = plt.imshow(sl.game_field, animated=True,
-                    cmap=plt.get_cmap("plasma"), aspect="equal")
+                    cmap=plt.get_cmap("winter"), aspect="equal")
     def animate(*args):
         im.set_array(sl.next())
         return (im, )
-    ani = animation.FuncAnimation(fig, animate, interval=60, blit=True)
+    ani = animation.FuncAnimation(fig, animate, interval=100, blit=True)
     
     plt.show()
 
