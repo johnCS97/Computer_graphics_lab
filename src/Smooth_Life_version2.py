@@ -17,15 +17,16 @@ class SmoothL:
         self.outer = outer_radius
         self.game_field = np.zeros(shape=(self.width, self.height))
         self.SLmathmatics = slm.Multipliers((width, height))
+        
 
     # Create_cells: creates cells depending on inner radius
     # [x:x+y,z:z+y] array thing, runs on all array indexes included in the range
 
     def create_cells(self, new_cells, age):
         for i in range(new_cells):
-            x = np.random.randint(0, self.width - self.outer)
-            y = np.random.randint(0, self.height - self.outer)
-            self.game_field[x:x + self.outer, y:y + self.outer] = age
+            x = np.random.randint(self.outer, self.width - self.outer)
+            y = np.random.randint(self.outer, self.height - self.outer)
+            self.game_field[x-self.outer:x + self.outer, y-self.outer:y + self.outer] = age
 
     def next(self):
         field = np.fft.fft2(self.game_field)
@@ -39,8 +40,8 @@ class SmoothL:
         return self.game_field
         
 if __name__ == '__main__':
-    sl = SmoothL(400, 400)
-    sl.create_cells(100,1)
+    sl = SmoothL(200, 200)
+    sl.create_cells(200,0.54)
     fig = plt.figure()
     im = plt.imshow(sl.game_field, animated=True,
                     cmap=plt.get_cmap("winter"), aspect="equal")

@@ -25,12 +25,16 @@ class Rules:
         return self.sigmaoid_2(n, self.sigmaoid_m(self.b1, self.d1, m), self.sigmaoid_m(self.b2, self.d2, m))
 
 def logistics(size, radius, ):
-    y, x = size
-    yy, xx = np.mgrid[:y, :x]
-    radiuses = np.sqrt((xx - x / 2) ** 2 + (yy - y / 2) ** 2)
+    y, x,z = size
+    yy, xx, zz = np.mgrid[:y, :x, :z]
+    radiuses = np.sqrt((xx - x / 2) ** 2 + (yy - y / 2) ** 2+(zz - z / 2) ** 2)
+    
     logres = math.log(min(*size), 2)
+    
     with np.errstate(over="ignore"):
         logistic = 1 / (1 + np.exp(logres * (radiuses - radius)))
+    
     logistic = np.roll(logistic, y // 2, axis=0)
     logistic = np.roll(logistic, x // 2, axis=1)
+    logistic = np.roll(logistic, z // 2, axis=2)
     return logistic

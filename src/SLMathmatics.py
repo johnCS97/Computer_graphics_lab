@@ -13,7 +13,7 @@ class Multipliers:
     
         self.inner /= np.sum(self.inner)
         self.annulus /= np.sum(self.annulus)
-
-        self.M = np.fft.fft2(self.inner)
-        self.N = np.fft.fft2(self.annulus)
+        
+        self.M = np.fft.fftn(self.inner)
+        self.N = np.fft.fftn(self.annulus)
 
