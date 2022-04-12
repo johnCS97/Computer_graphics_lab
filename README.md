@@ -87,3 +87,68 @@ results seem good.
 
 Total time : 12 hours
 
+## Took a break to focus on exams
+
+##Week 8 27/2/2022
+
+Started planing the next part.
+
+We have decided to implement game of life in 3D.
+
+Did some research on matplotlib and the animation module.
+
+Searched for an atricle that discribes the 3d version.
+
+Total time : 7 hours
+
+##Week 9 6/3/2022
+
+Found an article you can find it in the reference folder.
+
+Started implementation of Game of life 3D.
+
+The game class is ready.
+
+Tried a couple of things to check if the data is getting updated right.
+
+Had some difficulties and tried to debug.
+
+Total time : 6 hours
+
+##Week 10 13/3/2022
+
+Started to build the main class that would run the whole thing using matplotlib and the animation module.
+
+Things didn't work well after a lot of debugging and tries, found out the problem.
+
+Had to "clear" the figure between each frame and frame since ax.voxels doesn't initialize it's 3D array.
+
+Finally things worked well and now Game of life 3D works.
+
+screen records were sent to the discored channel you might find them as well in the videos folder/
+
+Total time : 8 hours
+
+##Week 11 20/3/2022
+
+Did some improvements to the code.
+
+Made it simpler.
+
+Total time : 3 hours
+
+##Week 27/3/2022
+
+Took a break.
+
+##Week 12 3/4/2022
+
+Started planing the next part.
+
+For this part of the project we will implement, smooth life in 3D.
+
+We might use matplotlib and the animation module.
+
+Probebly we will use FFT kernel.
+
+Total time : 4 hours

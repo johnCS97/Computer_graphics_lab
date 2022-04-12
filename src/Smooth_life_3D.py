@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from matplotlib import animation
 import numpy as np
-import SLMathmatics as slm
+import SLMathmatics3D as slm
 import mpl_toolkits.mplot3d.axes3d as p3
 import Rules3D as rs
 import os
@@ -44,15 +44,15 @@ class SmoothL:
         return self.game_field
         
 if __name__ == '__main__':
-    sm=SmoothL(20, 20, 20,1,3)
+    sm=SmoothL(10, 10, 10,1,2)
     sm.create_cells(4,0.32)
     ax = plt.figure().add_subplot(projection='3d')
     ax.axis('off')
-    ax.voxels(sm.game_field,facecolor="#4d4d4d",edgecolors='black')
+    ax.voxels(sm.game_field,facecolor="#4d4d4d",edgecolors="#4d4d4d")
     def animate(*args):
         plt.cla()
         ax.axis('off')
-        ax.voxels(sm.next(),facecolor="#4d4d4d",edgecolors='black',shade=True)
+        ax.voxels(sm.next(),facecolor="#4d4d4d",edgecolors="#4d4d4d",shade=True)
         return ax,
     ani = animation.FuncAnimation(ax.figure, animate, interval=20, blit=True)
     plt.show()

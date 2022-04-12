@@ -1,7 +1,5 @@
 import os
-
 import pygame
-
 import Pivato as Pv
 from matplotlib import pyplot as plt
 from matplotlib import animation
