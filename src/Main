@@ -1,0 +1,97 @@
+from matplotlib import animation
+from matplotlib import pyplot as plt
+import mpl_toolkits.mplot3d.axes3d as p3
+import SRC_2D.SmoothLife.Smooth_Life_version2 as SLV2
+import SRC_2D.SmoothLife.Smooth_Life_version1 as SLV1
+import SRC_3D.game_of_life_3D as gol_3D
+import SRC_2D.larger_than_life as ltl
+import SRC_2D.game_of_life as gol
+import SRC_2D.Pivato as pv
+import os
+import sys
+sys.path.insert(1, '/path/to/src/SRC_2D')
+sys.path.insert(1, '/path/to/src/SRC_3D')
+
+
+gol3d = gol_3D.Game(10, 10, 10, 500)
+pv = pv.Game(100, 100, 5)
+lg = ltl.Game(100, 100, 5)
+gol = gol.Game(100, 100)
+sl1 = SLV1.SmoothL(50, 50)
+sl2 = SLV2.SmoothL(500, 500)
+
+var = 5
+
+if __name__ == '__main__':
+
+    if var == 1:
+        fig_2d = plt.figure()
+        img = plt.imshow(gol.game_array, animated=True,
+                         cmap=plt.get_cmap("binary"), aspect="equal")
+
+        def animate(*args):
+            img.set_array(gol.next_gen())
+            return img,
+        ani = animation.FuncAnimation(fig_2d, animate, interval=75, blit=True)
+        plt.show()
+
+    if var == 2:
+        fig_2d = plt.figure()
+        img = plt.imshow(lg.game_array, animated=True,
+                         cmap=plt.get_cmap("binary"), aspect="equal")
+
+        def animate(*args):
+            img.set_array(lg.next_gen())
+            return img,
+        ani = animation.FuncAnimation(fig_2d, animate, interval=75, blit=True)
+        plt.show()
+
+    if var == 3:
+        fig_2d = plt.figure()
+        img = plt.imshow(pv.game_array, animated=True,
+                         cmap=plt.get_cmap("binary"), aspect="equal")
+
+        def animate(*args):
+            img.set_array(pv.next_gen())
+            return img,
+        ani = animation.FuncAnimation(fig_2d, animate, interval=75, blit=True)
+        plt.show()
+    if var == 4:
+        fig_3d = plt.figure().add_subplot(projection='3d')
+        fig_3d.axis('off')
+        fig_3d.voxels(gol3d.game_array, facecolor="#4d4d4d",
+                      edgecolors='black')
+
+        def animate(*args):
+            plt.cla()
+            fig_3d.axis('off')
+            fig_3d.voxels(gol3d.next_gen(), facecolor="#4d4d4d",
+                          edgecolors='black')
+            return fig_3d,
+        ani = animation.FuncAnimation(
+            fig_3d.figure, animate, interval=300, blit=True)
+        plt.show()
+        
+    if var == 5:
+        sl1.create_cells(10, 0.5)
+        fig = plt.figure()
+        im = plt.imshow(sl1.game_field, animated=True,
+                        cmap=plt.get_cmap("plasma"), aspect="equal")
+
+        def animate(*args):
+            im.set_array(sl1.next())
+            return (im, )
+        ani = animation.FuncAnimation(fig, animate, interval=20, blit=True)
+        plt.show()
+
+    if var == 6:
+        sl2.create_cells(50, 0.5)
+        fig = plt.figure()
+        im = plt.imshow(sl2.game_field, animated=True,
+                        cmap=plt.get_cmap("plasma"), aspect="equal")
+
+        def animate(*args):
+            im.set_array(sl2.next())
+            return (im, )
+        ani = animation.FuncAnimation(fig, animate, interval=100, blit=True)
+        plt.show()

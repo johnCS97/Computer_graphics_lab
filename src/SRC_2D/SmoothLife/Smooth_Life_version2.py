@@ -1,10 +1,11 @@
+
+import os
+
 from matplotlib import pyplot as plt
 from matplotlib import animation
 import numpy as np
-import SLMathmatics as slm
-import Rules as rs
-import os
-import pygame
+import SRC_2D.SmoothLife.SLMathmatics as slm
+import SRC_2D.SmoothLife.Rules as rs
 
 
 class SmoothL:
@@ -17,7 +18,6 @@ class SmoothL:
         self.outer = outer_radius
         self.game_field = np.zeros(shape=(self.width, self.height))
         self.SLmathmatics = slm.Multipliers((width, height))
-        
 
     # Create_cells: creates cells depending on inner radius
     # [x:x+y,z:z+y] array thing, runs on all array indexes included in the range
@@ -26,7 +26,8 @@ class SmoothL:
         for i in range(new_cells):
             x = np.random.randint(self.outer, self.width - self.outer)
             y = np.random.randint(self.outer, self.height - self.outer)
-            self.game_field[x-self.outer:x + self.outer, y-self.outer:y + self.outer] = age
+            self.game_field[x-self.outer:x + self.outer,
+                            y-self.outer:y + self.outer] = age
 
     def next(self):
         field = np.fft.fft2(self.game_field)
@@ -35,20 +36,6 @@ class SmoothL:
         M_buffer = np.real(np.fft.ifft2(M_buffer))
         N_buffer = np.real(np.fft.ifft2(N_buffer))
         s = self.rules.sigmaoid_s(N_buffer, M_buffer)
-        
+
         self.game_field = np.clip(s, 0, 1)
         return self.game_field
-        
-if __name__ == '__main__':
-    sl = SmoothL(200, 200)
-    sl.create_cells(200,0.54)
-    fig = plt.figure()
-    im = plt.imshow(sl.game_field, animated=True,
-                    cmap=plt.get_cmap("winter"), aspect="equal")
-    def animate(*args):
-        im.set_array(sl.next())
-        return (im, )
-    ani = animation.FuncAnimation(fig, animate, interval=100, blit=True)
-    
-    plt.show()
-
