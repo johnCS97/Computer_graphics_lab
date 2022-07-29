@@ -1,19 +1,21 @@
 import random
-
 import numpy as np
-
 import scipy.signal as ss
-
 
 class Game:
     def __init__(self, width, height):
         self.rows = int(width)
         self.columns = int(height)
-        self.game_array = np.ndarray(shape=(self.rows, self.columns))
+        self.game_array = np.zeros(shape=(self.rows, self.columns))
         self.kernel = np.asarray([[1, 1, 1], [1, 0, 1], [1, 1, 1]])
         self.array_init()
 
     def array_init(self):
+        # self.game_array[5][5]=1
+        # self.game_array[6][5]=1
+        # self.game_array[6][3]=1
+        # self.game_array[7][5]=1
+        # self.game_array[7][4]=1
         for x in range(self.rows):
             for y in range(self.columns):
                 self.game_array[x][y] = random.randint(0, 1)

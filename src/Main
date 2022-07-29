@@ -1,34 +1,35 @@
 from matplotlib import animation
 from matplotlib import pyplot as plt
-import mpl_toolkits.mplot3d.axes3d as p3
-import SRC_2D.SmoothLife.Smooth_Life_version2 as SLV2
-import SRC_2D.SmoothLife.Smooth_Life_version1 as SLV1
+import SRC_2D.SmoothLife.Smooth_Life as SLV
 import SRC_3D.game_of_life_3D as gol_3D
+import SRC_3D.SmoothLife.Smooth_life_3D as SLV_3D
 import SRC_2D.larger_than_life as ltl
 import SRC_2D.game_of_life as gol
 import SRC_2D.Pivato as pv
-import os
+import numpy as np
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+from skimage import measure
+from matplotlib.colors import LightSource
 import sys
 sys.path.insert(1, '/path/to/src/SRC_2D')
 sys.path.insert(1, '/path/to/src/SRC_3D')
 
-
-gol3d = gol_3D.Game(10, 10, 10, 500)
-pv = pv.Game(100, 100, 5)
-lg = ltl.Game(100, 100, 5)
+pv = pv.Game(300, 300, 5)
+lg = ltl.Game(500, 500, 5)
 gol = gol.Game(100, 100)
-sl1 = SLV1.SmoothL(50, 50)
-sl2 = SLV2.SmoothL(500, 500)
+sl = SLV.SmoothL(700, 700)
+gol3d = gol_3D.Game(13, 13, 13 , 200)
+ss=15
+sm = SLV_3D.SmoothL(ss, ss, ss, 3, 6)
 
-var = 5
+var = 6
 
 if __name__ == '__main__':
 
     if var == 1:
-        fig_2d = plt.figure()
+        fig_2d = plt.figure(figsize=(7, 7))
         img = plt.imshow(gol.game_array, animated=True,
-                         cmap=plt.get_cmap("binary"), aspect="equal")
-
+                         cmap=plt.get_cmap("Blues"), aspect="equal")
         def animate(*args):
             img.set_array(gol.next_gen())
             return img,
@@ -36,62 +37,176 @@ if __name__ == '__main__':
         plt.show()
 
     if var == 2:
-        fig_2d = plt.figure()
+        fig_2d = plt.figure(figsize=(7, 7))
         img = plt.imshow(lg.game_array, animated=True,
-                         cmap=plt.get_cmap("binary"), aspect="equal")
-
+                         cmap=plt.get_cmap("winter"), aspect="equal")
         def animate(*args):
             img.set_array(lg.next_gen())
             return img,
-        ani = animation.FuncAnimation(fig_2d, animate, interval=75, blit=True)
+        ani = animation.FuncAnimation(fig_2d, animate, interval=50, blit=True)
         plt.show()
 
     if var == 3:
-        fig_2d = plt.figure()
+        fig_2d = plt.figure(figsize=(7, 7))
         img = plt.imshow(pv.game_array, animated=True,
-                         cmap=plt.get_cmap("binary"), aspect="equal")
-
+                         cmap=plt.get_cmap("plasma"), aspect="equal")
         def animate(*args):
             img.set_array(pv.next_gen())
             return img,
-        ani = animation.FuncAnimation(fig_2d, animate, interval=75, blit=True)
+        ani = animation.FuncAnimation(fig_2d, animate, interval=100, blit=True)
         plt.show()
-    if var == 4:
-        fig_3d = plt.figure().add_subplot(projection='3d')
-        fig_3d.axis('off')
-        fig_3d.voxels(gol3d.game_array, facecolor="#4d4d4d",
-                      edgecolors='black')
 
+    if var == 4:
+    
+        fig=plt.figure(figsize=(7, 7))
+        fig_3d = fig.add_subplot(projection='3d')
+        fig_3d.voxels(gol3d.game_array, facecolor="#00a86b",
+                      edgecolors='black')
+        fig_3d.grid(False)
+        fig_3d.set_facecolor('#003166')
+        fig.set_facecolor('#003166')
+        fig_3d.xaxis.pane.set_facecolor('#003d80')
+        fig_3d.yaxis.pane.set_facecolor('#003d80')
+        fig_3d.zaxis.pane.set_facecolor('#003d80')
+        fig_3d.xaxis.pane.set_edgecolor('#000000')
+        fig_3d.yaxis.pane.set_edgecolor('#000000')
+        fig_3d.zaxis.pane.set_edgecolor('#000000')
+        fig_3d.xaxis.pane.set_alpha(1)
+        fig_3d.yaxis.pane.set_alpha(1)
+        fig_3d.zaxis.pane.set_alpha(1)
+        fig_3d.set_yticklabels([])
+        fig_3d.set_zticklabels([])
+        fig_3d.set_xticklabels([])
+        fig_3d.set_xticks([])
+        fig_3d.set_zticks([])
+        fig_3d.set_yticks([])
         def animate(*args):
             plt.cla()
-            fig_3d.axis('off')
-            fig_3d.voxels(gol3d.next_gen(), facecolor="#4d4d4d",
+            # fig_3d.axis('off')
+            fig_3d.voxels(gol3d.next_gen(), facecolor="#00a86b",
                           edgecolors='black')
+            fig_3d.grid(False)
+            fig_3d.set_facecolor('#003166')
+            fig.set_facecolor('#003166')
+            fig_3d.xaxis.pane.set_facecolor('#003d80')
+            fig_3d.yaxis.pane.set_facecolor('#003d80')
+            fig_3d.zaxis.pane.set_facecolor('#003d80')
+            fig_3d.xaxis.pane.set_edgecolor('#000000')
+            fig_3d.yaxis.pane.set_edgecolor('#000000')
+            fig_3d.zaxis.pane.set_edgecolor('#000000')
+            fig_3d.xaxis.pane.set_alpha(1)
+            fig_3d.yaxis.pane.set_alpha(1)
+            fig_3d.zaxis.pane.set_alpha(1)
+            fig_3d.set_yticklabels([])
+            fig_3d.set_zticklabels([])
+            fig_3d.set_xticklabels([])
+            fig_3d.set_xticks([])
+            fig_3d.set_zticks([])
+            fig_3d.set_yticks([])
+            fig_3d.view_init(elev=gol3d.angle, azim=gol3d.angle)
+
+                
+
             return fig_3d,
         ani = animation.FuncAnimation(
-            fig_3d.figure, animate, interval=300, blit=True)
+            fig_3d.figure, animate, interval=130, blit=False)
         plt.show()
         
     if var == 5:
-        sl1.create_cells(10, 0.5)
-        fig = plt.figure()
-        im = plt.imshow(sl1.game_field, animated=True,
+        sl.create_cells(350, 0.4)
+        fig = plt.figure(figsize=(7, 7))
+        im = plt.imshow(sl.game_field, animated=True,
                         cmap=plt.get_cmap("plasma"), aspect="equal")
-
         def animate(*args):
-            im.set_array(sl1.next())
-            return (im, )
-        ani = animation.FuncAnimation(fig, animate, interval=20, blit=True)
-        plt.show()
-
-    if var == 6:
-        sl2.create_cells(50, 0.5)
-        fig = plt.figure()
-        im = plt.imshow(sl2.game_field, animated=True,
-                        cmap=plt.get_cmap("plasma"), aspect="equal")
-
-        def animate(*args):
-            im.set_array(sl2.next())
+            im.set_array(sl.next())
             return (im, )
         ani = animation.FuncAnimation(fig, animate, interval=100, blit=True)
+        plt.show()
+
+    if var ==6 :
+       
+        sm.create_cells(20, 0.35)
+        
+        verts, faces, normals, values= measure.marching_cubes(sm.game_field,None)
+        # measure.subdivide_polygon(verts[faces])
+        # pymesh.subdivide(mesh, order=2, method="loop")
+        fig = plt.figure(figsize=(7, 7))
+        ax = fig.add_subplot(111, projection='3d')
+
+        mesh = Poly3DCollection(verts[faces])
+        ls = LightSource(azdeg=225.0, altdeg=45.0)
+        normalsarray = np.array([np.array((np.sum(normals[face[:], 0]/3), np.sum(normals[face[:], 1]/3), np.sum(normals[face[:], 2]/3))/np.sqrt(np.sum(normals[face[:], 0]/3)**2 + np.sum(normals[face[:], 1]/3)**2 + np.sum(normals[face[:], 2]/3)**2)) for face in faces])
+        min = np.min(ls.shade_normals(normalsarray, fraction=1.0))
+        max = np.max(ls.shade_normals(normalsarray, fraction=1.0))
+        diff = max-min
+        newMin = 0.3
+        newMax = 0.95
+        newdiff = newMax-newMin
+        colourRGB = np.array((13.0/255.0, 162.0/255.0, 255/255.0, 1.0))
+        rgbNew = np.array([colourRGB*(newMin + newdiff*((shade-min)/diff)) for shade in ls.shade_normals(normalsarray, fraction=1.0)])
+        mesh.set_facecolor(rgbNew)
+        ax.add_collection3d(mesh)
+        ax.set_xlim(0, ss)
+        ax.set_ylim(0, ss)
+        ax.set_zlim(0, ss)
+        ax.grid(False)
+        ax.set_facecolor('#000000')
+        fig.set_facecolor('#000000')
+        ax.xaxis.pane.set_facecolor('#000000')
+        ax.yaxis.pane.set_facecolor('#000000')
+        ax.zaxis.pane.set_facecolor('#000000')
+        ax.xaxis.pane.set_edgecolor('#ffffff')
+        ax.yaxis.pane.set_edgecolor('#ffffff')
+        ax.zaxis.pane.set_edgecolor('#ffffff')
+        ax.xaxis.pane.set_alpha(1)
+        ax.yaxis.pane.set_alpha(1)
+        ax.zaxis.pane.set_alpha(1)
+        ax.set_yticklabels([])
+        ax.set_zticklabels([])
+        ax.set_xticklabels([])
+        ax.set_xticks([])
+        ax.set_zticks([])
+        ax.set_yticks([])
+        ax.view_init(elev=sm.angle, azim=sm.angle)
+        def animate(*args):
+            ax.cla()
+            ax.set_xlim(0, ss)
+            ax.set_ylim(0, ss)
+            ax.set_zlim(0, ss)
+            verts, faces, normals, values =  measure.marching_cubes(sm.next(),None)
+            ax.grid(False)
+            ax.set_facecolor('#000000')
+            fig.set_facecolor('#000000')
+            ax.xaxis.pane.set_facecolor('#000000')
+            ax.yaxis.pane.set_facecolor('#000000')
+            ax.zaxis.pane.set_facecolor('#000000')
+            ax.xaxis.pane.set_edgecolor('#ffffff')
+            ax.yaxis.pane.set_edgecolor('#ffffff')
+            ax.zaxis.pane.set_edgecolor('#ffffff')
+            ax.xaxis.pane.set_alpha(1)
+            ax.yaxis.pane.set_alpha(1)
+            ax.zaxis.pane.set_alpha(1)
+            ax.set_yticklabels([])
+            ax.set_zticklabels([])
+            ax.set_xticklabels([])
+            ax.set_xticks([])
+            ax.set_zticks([])
+            ax.set_yticks([])
+            mesh = Poly3DCollection(verts[faces])
+            ls = LightSource(azdeg=sm.angle, altdeg=sm.angle)
+            normalsarray = np.array([np.array((np.sum(normals[face[:], 0]/3), np.sum(normals[face[:], 1]/3), np.sum(normals[face[:], 2]/3))/np.sqrt(np.sum(normals[face[:], 0]/3)**2 + np.sum(normals[face[:], 1]/3)**2 + np.sum(normals[face[:], 2]/3)**2)) for face in faces])
+            min = np.min(ls.shade_normals(normalsarray, fraction=1.0)) 
+            max = np.max(ls.shade_normals(normalsarray, fraction=1.0)) 
+            diff = max-min
+            newMin = 0.3
+            newMax = 0.95
+            newdiff = newMax-newMin
+            colourRGB = np.array((13.0/255.0, 162.0/255.0, 255/255.0, 1.0))
+            rgbNew = np.array([colourRGB*(newMin + newdiff*((shade-min)/diff)) for shade in ls.shade_normals(normalsarray, fraction=1.0)])
+            mesh.set_facecolor(rgbNew)
+            ax.add_collection3d(mesh)
+            ax.view_init(elev=sm.angle, azim=sm.angle)
+            return (ax, )
+        ani = animation.FuncAnimation(fig, animate, interval=100, blit=False)
+        plt.tight_layout()
         plt.show()

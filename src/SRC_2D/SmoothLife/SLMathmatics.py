@@ -1,7 +1,6 @@
-
 import numpy as np
-
 import SRC_2D.SmoothLife.Rules as Rs
+
 class Multipliers:
     INNER_RADIUS = 7.0
     OUTER_RADIUS = INNER_RADIUS * 3.0

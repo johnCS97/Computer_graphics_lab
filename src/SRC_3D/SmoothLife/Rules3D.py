@@ -1,7 +1,6 @@
 import numpy as np
 import math
 
-
 class Rules3D:
 
     def __init__(self, b1=0.278, b2=0.365, d1=0.267, d2=0.445, m=0.028, n=0.147):
@@ -24,6 +23,8 @@ class Rules3D:
     def sigmaoid_s(self, n, m):
         return self.sigmaoid_2(n, self.sigmaoid_m(self.b1, self.d1, m), self.sigmaoid_m(self.b2, self.d2, m))
 
+    def sigmaoid_new(self, n, m):
+        return 2*self.sigmaoid_s(n, m)-1
 
 def logistics(size, radius, ):
     z, y, x = size
