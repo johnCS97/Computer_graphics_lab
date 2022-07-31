@@ -19,7 +19,6 @@ class SmoothL:
         self.SLmathmatics = slm.Multipliers((width, height, depth),inner_radius,outer_radius)
 
     def create_cells(self, new_cells, age):
-        
         for i in range(new_cells):
             x = np.random.randint(self.outer, self.rows - self.outer)
             y = np.random.randint(self.outer, self.cols - self.outer)

@@ -32,5 +32,4 @@ class Game:
                     self.game_array[x][y] = 1
                 else:
                     self.game_array[x][y] = 0
-        self.game_array = np.clip(self.game_array, 0, 1)
         return self.game_array

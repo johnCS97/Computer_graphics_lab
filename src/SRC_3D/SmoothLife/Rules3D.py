@@ -33,8 +33,8 @@ def logistics(size, radius, ):
 
     logres = math.log(min(*size), 2)
 
-    with np.errstate(over="ignore"):
-        logistic = 1 / (1 + np.exp(logres * (radiuses - radius)))
+    # with np.errstate(over="ignore"):
+    logistic = 1 / (1 + np.exp(logres * (radiuses - radius)))
 
     logistic = np.roll(logistic, y // 2, axis=0)
     logistic = np.roll(logistic, x // 2, axis=1)

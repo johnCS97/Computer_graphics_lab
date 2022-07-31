@@ -18,18 +18,18 @@ class Game:
     def get_angle(self):
         return self.angle
     def array_init(self, cells):
-        # for i in range(cells):
-        #     x = random.randint(0, self.rows-1)
-        #     y = random.randint(0, self.columns-1)
-        #     z = random.randint(0, self.slices-1)
-        #     self.game_array[x][y][z] = random.randint(0, 1)
-        self.game_array[(int)(self.rows/2)][(int)(self.columns/2)][(int)(self.slices/2)]=1
-        self.game_array[(int)(self.rows/2)][(int)(self.columns/2)][(int)(self.slices/2)+1]=1
-        self.game_array[(int)(self.rows/2)][(int)(self.columns/2)][(int)(self.slices/2)-1]=1
-        # self.game_array[(int)(self.rows/2)][(int)(self.columns/2)+1][(int)(self.slices/2)]=1
-        # self.game_array[(int)(self.rows/2)][(int)(self.columns/2)-1][(int)(self.slices/2)]=1
-        self.game_array[(int)(self.rows/2)+1][(int)(self.columns/2)][(int)(self.slices/2)]=1
-        self.game_array[(int)(self.rows/2)-1][(int)(self.columns/2)][(int)(self.slices/2)]=1
+        for i in range(cells):
+            x = random.randint(0, self.rows-1)
+            y = random.randint(0, self.columns-1)
+            z = random.randint(0, self.slices-1)
+            self.game_array[x][y][z] = random.randint(0, 1)
+        # self.game_array[(int)(self.rows/2)][(int)(self.columns/2)][(int)(self.slices/2)]=1
+        # self.game_array[(int)(self.rows/2)][(int)(self.columns/2)][(int)(self.slices/2)+1]=1
+        # self.game_array[(int)(self.rows/2)][(int)(self.columns/2)][(int)(self.slices/2)-1]=1
+        # # self.game_array[(int)(self.rows/2)][(int)(self.columns/2)+1][(int)(self.slices/2)]=1
+        # # self.game_array[(int)(self.rows/2)][(int)(self.columns/2)-1][(int)(self.slices/2)]=1
+        # self.game_array[(int)(self.rows/2)+1][(int)(self.columns/2)][(int)(self.slices/2)]=1
+        # self.game_array[(int)(self.rows/2)-1][(int)(self.columns/2)][(int)(self.slices/2)]=1
 
     def next_gen(self):
         self.angle+=1

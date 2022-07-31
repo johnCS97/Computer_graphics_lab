@@ -18,11 +18,11 @@ pv = pv.Game(300, 300, 5)
 lg = ltl.Game(500, 500, 5)
 gol = gol.Game(100, 100)
 sl = SLV.SmoothL(700, 700)
-gol3d = gol_3D.Game(13, 13, 13 , 200)
-ss=15
-sm = SLV_3D.SmoothL(ss, ss, ss, 3, 6)
+gol3d = gol_3D.Game(13, 13, 13 , 300)
+ss=17
+sm = SLV_3D.SmoothL(ss, ss, ss, 3, 7)
 
-var = 6
+var = 1
 
 if __name__ == '__main__':
 
@@ -128,8 +128,6 @@ if __name__ == '__main__':
         sm.create_cells(20, 0.35)
         
         verts, faces, normals, values= measure.marching_cubes(sm.game_field,None)
-        # measure.subdivide_polygon(verts[faces])
-        # pymesh.subdivide(mesh, order=2, method="loop")
         fig = plt.figure(figsize=(7, 7))
         ax = fig.add_subplot(111, projection='3d')
 
