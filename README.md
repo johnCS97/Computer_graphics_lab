@@ -42,7 +42,7 @@ Pivato's real life:
 - discrete rules for "cell", i.e. function value
 - no gliders, still life in the limit
 
-![PV](https://user-images.githubusercontent.com/92673473/182392203-f6e39f4e-d609-4cbb-9816-1ae8fb1c6f4a.gif)
+![PV](https://user-images.githubusercontent.com/92673473/182403167-641a935d-60ea-42db-927f-2f9551e012f4.gif)
 
 Ralph's Smooth Life:
 
@@ -73,7 +73,7 @@ Conway's Game of Life 3D:
 - discrete rules for the neighborhood (4555)
 - discrete rules for cell
 
-![GOL3D](https://user-images.githubusercontent.com/92673473/182391946-57b9f26f-837b-4761-a2fb-92bc7df145ea.gif)
+![GOL3D](https://user-images.githubusercontent.com/92673473/182402810-810db812-80e1-47e6-bb8a-e69da41df825.gif)
 
 - Initialize with:
 
