@@ -1,7 +1,7 @@
 Hello, 
 This project is about Conway’s game of life (GOL).
 
-The project was part of a university course that started in October  2021 and ended in July 2022.
+The project was part of a university course ("Computer graphics lab, Dr.Poranne Roi") that started in October  2021 and ended in July 2022.
 
 The main goal was to visualize the different generalizations of GOL, where implementation was done with python.
 
@@ -16,7 +16,6 @@ Conway's Game of life:
 - discrete-time steps
 - 8 neighbors, square
 - discrete rules for the neighborhood (2333)
-- discrete rules for cell
 - diagonal and straight gliders (called "glider" and "spaceship")
 
 ![GOL](https://user-images.githubusercontent.com/92673473/182391253-07bdebd1-7251-4022-9b3c-ac8bc0759bd0.gif)
@@ -26,19 +25,18 @@ Evan's larger-than-life:
 - discrete grid
 - discrete values (0/1)
 - discrete timesteps
-- extended neighborhood (2*r+1)^2-1 neighbors), square
+- extended neighborhood ((2*r+1)^2-1 neighbors), square
 - discrete rules for neighborhood (34,45,34,58)
-- discrete rules for cell
 
 ![LTL](https://user-images.githubusercontent.com/92673473/182391404-92446549-351b-4bed-aae3-8b15570804fd.gif)
 
 Pivato's real life:
 
-- continuous support (more in the spirit of excitable media and reaction-diffusion)
+- continuous support
 - discrete values (0/1)
 - discrete-time steps
 - finite neighborhood (square or circular), infinitesimal "cell"
-- continuous rules for neighborhood (filling between 0 (empty) and 1 (full))
+- continuous rules for neighborhood
 - discrete rules for "cell", i.e. function value
 - no gliders, still life in the limit
 
@@ -49,11 +47,12 @@ Ralph's Smooth Life:
 - continuous support
 - continuous values between (0->1)
 - smooth time steps
-- finite neighborhood and finite inner region, both typically circular
+- finite neighborhood and finite inner region, both usually circular
 - continuous rules for the neighborhood
 - continuous rules for the inner region
 
 Smooth Life calculations are a bit heavy, in order to speed things up, we have used kernel convolution with FFT, Reducing time complexity from O(n⁴) to O(n²·log(n)).
+
 Building the kernels:
 - Create two arrays with NumPy.meshgrid
 - Assign them in the distance equation (d = sqrt{(x_2 - n/2)^2 + (y_2-n/2)^2})
@@ -94,5 +93,23 @@ Ralph's Smooth Life 3D:
 - continuous rules for the neighborhood
 - continuous rules for the inner region
 - Similar implementation to Smooth Life 2D
+- Used Marching Cubes algorithm to create the mesh
+- Used shade_normals from LihgtSource 
 
 ![SL3D](https://user-images.githubusercontent.com/92673473/182391740-eefc90c5-0149-4c39-aecc-c313b7f0b7eb.gif)
+
+Libraries:
+- import numpy
+- import sys
+- import random
+- import math
+- import scipy.signal
+- from matplotlib import animation
+- from matplotlib import pyplot
+- from matplotlib.colors import LightSource
+- from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+- from skimage import measure
+- from pickle import NONE
+- from scipy.fft import fftn, ifftn
+- from scipy.ndimage import convolve
+
